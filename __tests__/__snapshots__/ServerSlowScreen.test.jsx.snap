@@ -1,0 +1,302 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ServerSlowScreen matches snapshot 1`] = `
+<View
+  style={
+    {
+      "backgroundColor": "#ffffff",
+      "flex": 1,
+    }
+  }
+>
+  <View
+    style={
+      [
+        {
+          "flex": 1,
+        },
+        {
+          "marginBottom": 0,
+          "marginTop": 0,
+        },
+      ]
+    }
+  >
+    <View
+      style={
+        {
+          "flex": 1,
+        }
+      }
+    >
+      <RCTSafeAreaView
+        style={
+          {
+            "backgroundColor": "#FDFCE7",
+            "flex": 1,
+          }
+        }
+      >
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "backgroundColor": "#FDFCE7",
+              "borderBottomColor": "#E5E7EB",
+              "borderBottomWidth": 1,
+              "height": 60,
+              "justifyContent": "center",
+            }
+          }
+        >
+          <Image
+            resizeMode="contain"
+            source={
+              {
+                "testUri": "../../../src/assests/smr-logo.png",
+              }
+            }
+            style={
+              {
+                "height": 40,
+                "width": 150,
+              }
+            }
+          />
+        </View>
+        <View
+          style={
+            {
+              "alignItems": "center",
+              "flex": 1,
+              "justifyContent": "center",
+              "paddingHorizontal": 40,
+            }
+          }
+        >
+          <View
+            style={
+              {
+                "marginBottom": 40,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "rgba(179, 42, 74, 0.05)",
+                  "borderColor": "rgba(179, 42, 74, 0.1)",
+                  "borderRadius": 110,
+                  "borderWidth": 1,
+                  "height": 220,
+                  "justifyContent": "center",
+                  "width": 220,
+                }
+              }
+            >
+              <View
+                style={
+                  {
+                    "alignItems": "center",
+                    "backgroundColor": "#FFFFFF",
+                    "borderRadius": 80,
+                    "elevation": 10,
+                    "height": 160,
+                    "justifyContent": "center",
+                    "shadowColor": "#B32A4A",
+                    "shadowOffset": {
+                      "height": 10,
+                      "width": 0,
+                    },
+                    "shadowOpacity": 0.1,
+                    "shadowRadius": 15,
+                    "width": 160,
+                  }
+                }
+              >
+                <Image
+                  resizeMode="contain"
+                  source={
+                    {
+                      "testUri": "../../../src/assests/smr-logo.png",
+                    }
+                  }
+                  style={
+                    {
+                      "height": 100,
+                      "opacity": 0.8,
+                      "width": 100,
+                    }
+                  }
+                />
+                <View
+                  style={
+                    {
+                      "alignItems": "center",
+                      "backgroundColor": "#49B675",
+                      "borderColor": "#FFFFFF",
+                      "borderRadius": 22,
+                      "borderWidth": 3,
+                      "bottom": 5,
+                      "height": 44,
+                      "justifyContent": "center",
+                      "position": "absolute",
+                      "right": 5,
+                      "width": 44,
+                    }
+                  }
+                >
+                  <Text
+                    style={
+                      {
+                        "fontSize": 18,
+                      }
+                    }
+                  >
+                    📡
+                  </Text>
+                </View>
+              </View>
+            </View>
+          </View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "marginBottom": 100,
+              }
+            }
+          >
+            <View
+              style={
+                {
+                  "backgroundColor": "rgba(179, 42, 74, 0.1)",
+                  "borderRadius": 4,
+                  "marginBottom": 12,
+                  "paddingHorizontal": 12,
+                  "paddingVertical": 4,
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#B32A4A",
+                    "fontSize": 11,
+                    "fontWeight": "800",
+                    "letterSpacing": 1,
+                  }
+                }
+              >
+                NETWORK ERROR
+              </Text>
+            </View>
+            <Text
+              style={
+                {
+                  "color": "#B32A4A",
+                  "fontSize": 22,
+                  "fontWeight": "bold",
+                  "marginBottom": 10,
+                }
+              }
+            >
+              Connection lost
+            </Text>
+            <Text
+              style={
+                {
+                  "color": "#4B5563",
+                  "fontSize": 14,
+                  "lineHeight": 22,
+                  "textAlign": "center",
+                }
+              }
+            >
+              To ensure your orders are processed correctly, SMR Foods requires a stable 4G, 5G, or Wi-Fi connection.
+            </Text>
+          </View>
+          <View
+            style={
+              {
+                "alignItems": "center",
+                "bottom": 30,
+                "position": "absolute",
+                "width": "100%",
+              }
+            }
+          >
+            <View
+              accessibilityState={
+                {
+                  "busy": undefined,
+                  "checked": undefined,
+                  "disabled": undefined,
+                  "expanded": undefined,
+                  "selected": undefined,
+                }
+              }
+              accessibilityValue={
+                {
+                  "max": undefined,
+                  "min": undefined,
+                  "now": undefined,
+                  "text": undefined,
+                }
+              }
+              accessible={true}
+              collapsable={false}
+              focusable={true}
+              onClick={[Function]}
+              onResponderGrant={[Function]}
+              onResponderMove={[Function]}
+              onResponderRelease={[Function]}
+              onResponderTerminate={[Function]}
+              onResponderTerminationRequest={[Function]}
+              onStartShouldSetResponder={[Function]}
+              style={
+                {
+                  "alignItems": "center",
+                  "backgroundColor": "#B32A4A",
+                  "borderRadius": 12,
+                  "elevation": 4,
+                  "height": 55,
+                  "justifyContent": "center",
+                  "opacity": 1,
+                  "width": "100%",
+                }
+              }
+            >
+              <Text
+                style={
+                  {
+                    "color": "#FFFFFF",
+                    "fontSize": 15,
+                    "fontWeight": "bold",
+                    "letterSpacing": 1,
+                  }
+                }
+              >
+                ↻ TRY AGAIN
+              </Text>
+            </View>
+            <Text
+              style={
+                {
+                  "color": "#9CA3AF",
+                  "fontSize": 12,
+                  "letterSpacing": 1,
+                  "marginTop": 20,
+                }
+              }
+            >
+              © 2026 SMR FOODS MILLS.
+            </Text>
+          </View>
+        </View>
+      </RCTSafeAreaView>
+    </View>
+  </View>
+</View>
+`;
