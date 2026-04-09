@@ -12,9 +12,9 @@ import { useNavigation } from '@react-navigation/native';
 import NoInternetConnectionWrapper from '../components/NoInternetConnectionWrapper';
 
 const COLORS = {
-  primary: '#B32A4A', // Maroon from logo
-  accentGreen: '#49B675', // Green from "Store" banner
-  bgLight: '#FDFCE7', // Light cream background from home screen
+  primary: '#B32A4A',
+  accentGreen: '#49B675',
+  bgLight: '#FDFCE7',
   textMain: '#1F2937',
   textSub: '#4B5563',
   white: '#FFFFFF',
@@ -40,21 +40,19 @@ const ServerSlowScreen = ({ onRetryOverride }) => {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="dark-content" backgroundColor={COLORS.bgLight} />
 
-      {/* Header mimicking the Home Screen App Bar */}
+      {/* Header */}
       <View style={styles.fakeHeader}>
         <Image
-          source={require('../assests/smr-logo.png')} // Using your asset path
+          source={require('../assests/smr-logo.png')}
           style={styles.logoSmall}
           resizeMode="contain"
         />
       </View>
 
       <View style={styles.content}>
-        {/* Main Illustration Area */}
         <View style={styles.illustrationContainer}>
           <View style={styles.outerCircle}>
             <View style={styles.innerCircle}>
-              {/* Using the Logo as the center instead of a generic cloud */}
               <Image
                 source={require('../assests/smr-logo.png')}
                 style={styles.mainLogoCenter}
@@ -67,7 +65,6 @@ const ServerSlowScreen = ({ onRetryOverride }) => {
           </View>
         </View>
 
-        {/* Messaging Section */}
         <View style={styles.infoSection}>
           <View style={styles.tag}>
             <Text style={styles.tagText}>NETWORK ERROR</Text>
@@ -78,7 +75,6 @@ const ServerSlowScreen = ({ onRetryOverride }) => {
           </Text>
         </View>
 
-        {/* Footer Action */}
         <View style={styles.footer}>
           <TouchableOpacity
             onPress={handleTryAgain}

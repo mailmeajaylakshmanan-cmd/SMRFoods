@@ -1,13 +1,3 @@
-/**
- * WebViewScreen.jsx — SMR Food Mills
- *
- * PERMANENT LOGIN:
- * - On every app foreground → silently re-authenticate (fresh PHP session)
- * - If server tries to show login page → intercept, re-auth, reload dashboard
- * - User NEVER sees the login screen unless they manually tap Logout
- * Zero UI changes from original.
- */
-
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import {
   View, Text, TouchableOpacity, StyleSheet, ActivityIndicator,
@@ -26,7 +16,7 @@ import ServerSlowScreen from './ServerSlowScreen';
 const FALLBACK_URL = 'https://smrfoodsmills.com/smrapp/app_mobile_view/category.php';
 const LOGIN_PATTERNS = ['checklog.php', '/login', '/signin', '/sign-in', '/auth'];
 
-// ── Skeleton Loader Component ──────────────────────────────────────────
+// Skeleton Loader Component
 const WebViewSkeleton = () => (
   <View style={styles.skeletonContainer}>
     <View style={styles.skeletonTopBar}>
@@ -66,7 +56,7 @@ export default function WebViewScreen() {
 
   const targetUrl = dashboardUrl || FALLBACK_URL;
 
-  // ── Cookie injection script ──────────────────────────────────────────────
+  // Cookie injection script
   const buildCookieScript = useCallback((cookieStr) => {
     const cookies = parseCookies(cookieStr);
     return `(function(){
@@ -82,7 +72,7 @@ export default function WebViewScreen() {
 
   const cookieScript = buildCookieScript(sessionCookies);
 
-  // ── Silent re-auth ───────────────────────────────────────────────────────
+  // Silent re-auth
   // Gets a fresh PHP session using stored credentials, injects it, reloads.
   const doSilentReAuth = useCallback(async () => {
     if (isReauthing.current) return;
@@ -111,7 +101,7 @@ export default function WebViewScreen() {
     }
   }, [buildCookieScript, targetUrl, updateCookies, signOut]);
 
-  // ── Re-auth every time app comes to foreground ───────────────────────────
+  // Re-auth on foreground
   // This guarantees a fresh session is always ready before the user sees anything.
   useEffect(() => {
     const sub = AppState.addEventListener('change', nextState => {
@@ -123,7 +113,7 @@ export default function WebViewScreen() {
     return () => sub.remove();
   }, [doSilentReAuth]);
 
-  // ── Block server login page — silently re-auth instead ──────────────────
+  // Block server login page and silently re-auth instead
   const onShouldStartLoadWithRequest = useCallback(request => {
     const url = (request.url || '').toLowerCase();
     const isLoginPage = LOGIN_PATTERNS.some(p => url.includes(p));
@@ -136,7 +126,7 @@ export default function WebViewScreen() {
     return true;
   }, [doSilentReAuth]);
 
-  // ── Android back button 
+  // Hardware back button
   useFocusEffect(
     useCallback(() => {
       const onBack = () => {
@@ -170,12 +160,13 @@ export default function WebViewScreen() {
     } catch (_) { }
   };
 
-  // ── Render (identical to original) ──────────────────────────────────────
+  // Render
   return (
     <NoInternetConnectionWrapper 
       onRetry={() => { setError(false); setLoading(true); isRecovering.current = true; webViewRef.current?.reload(); }}
       onRestore={() => { setError(false); setLoading(true); isRecovering.current = true; webViewRef.current?.reload(); }}
       headerOffset={Platform.OS === 'ios' ? 50 : 45} // Align popup below appHeader
+      isLoading={loading}
     >
       <View style={styles.container}>
         <StatusBar barStyle="dark-content" backgroundColor="#FFFFFF" />
@@ -188,7 +179,7 @@ export default function WebViewScreen() {
               activeOpacity={0.8}
               onPress={() => webViewRef.current?.goBack()}
             >
-              <Text style={styles.fabIcon}>←</Text>
+              <Text style={[styles.fabIcon, { marginBottom: 2 }]}>←</Text>
             </TouchableOpacity>
           ) : (
             <View style={{ width: 34 }} /> /* Spacer to keep logout on right */
@@ -259,7 +250,7 @@ export default function WebViewScreen() {
   );
 }
 
-// ── Styles ──────────────────────────────────────────────────────────
+// Styles
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#FFFFFF' },
   webview: { flex: 1 },

@@ -11,8 +11,8 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import useNetworkStatus from '../hooks/useNetworkStatus';
-// import Header from '../components/Header'; // COMMENTED OUT UNTIL DEFINED
-// import Footer from '../components/Footer'; // COMMENTED OUT UNTIL DEFINED
+// import Header from '../components/Header';
+// import Footer from '../components/Footer';
 
 const HEADER_HEIGHT = 80; // wrapper header height (adjust if needed)
 const FOOTER_HEIGHT = 86; // wrapper footer height (adjust if needed)
@@ -27,13 +27,29 @@ const NoInternetConnectionWrapper = ({
   onFooterPress,
   showMenu = true,
   onRetry,
-  onRestore, // Added onRestore prop
-  suppressInnerHeaderFooter = false, // explicit override if you want
-  headerOffset, // optional override (number in px) to precisely position popup under inner header
+  onRestore,
+  suppressInnerHeaderFooter = false,
+  headerOffset,
+  isLoading = false,
 }) => {
-  const { isOnline, isSlow } = useNetworkStatus() || { isOnline: true, isSlow: false };
+  const { isOnline, isSlow: networkIsSlow } = useNetworkStatus() || { isOnline: true, isSlow: false };
   const [showOnlinePopup, setShowOnlinePopup] = useState(false);
   const [wasOffline, setWasOffline] = useState(false);
+  const [timeoutSlow, setTimeoutSlow] = useState(false);
+
+  const isSlow = networkIsSlow || timeoutSlow;
+
+  useEffect(() => {
+    let timer;
+    if (isLoading) {
+      timer = setTimeout(() => {
+        setTimeoutSlow(true);
+      }, 15000);
+    } else {
+      setTimeoutSlow(false);
+    }
+    return () => clearTimeout(timer);
+  }, [isLoading]);
 
   // Animations for the green online popup
   const slideOnline = useRef(new Animated.Value(-80)).current;
@@ -271,7 +287,7 @@ const NoInternetConnectionWrapper = ({
     <View style={styles.container}>
       <StatusBar backgroundColor={isOnline ? '#e8f5e9' : '#fff'} barStyle="dark-content" />
 
-      {/* Wrapper Header - excluded for now since Header is undefined */}
+      {/* Wrapper Header */}
       {/* {renderWrapperHeaderFooter && (
         <View
           style={[styles.headerContainer, { opacity: headerOpacity }]}
@@ -342,20 +358,27 @@ const NoInternetConnectionWrapper = ({
       >
         <View style={styles.childrenContainer}>
           {isSlow ? (
-            // Blocked Screen: Show a placeholder ONLY when 2G or 3G
             <View style={styles.blockedContent}>
                <ActivityIndicator size="large" color="#000" />
                <Text style={styles.blockedText}>Connection too slow</Text>
                <Text style={styles.blockedSubText}>Please use 4G, 5G or Wi-Fi</Text>
+               <TouchableOpacity
+                 style={styles.slowRetryButton}
+                 onPress={() => {
+                   if (timeoutSlow) setTimeoutSlow(false);
+                   if (onRetry) onRetry();
+                 }}
+               >
+                 <Text style={styles.slowRetryText}>↻ Try Again</Text>
+               </TouchableOpacity>
             </View>
           ) : (
-            // Show the WebView (children) normally or when completely offline without data
             children
           )}
         </View>
       </View>
 
-      {/* Wrapper Footer - excluded for now since Footer is undefined */}
+      {/* Wrapper Footer */}
       {/* {renderWrapperHeaderFooter && (
         <View style={[styles.footerContainer, { opacity: footerOpacity }]} pointerEvents={footerPointer}>
           <Footer onPress={onFooterPress} />
@@ -489,6 +512,18 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#666',
     marginTop: 5,
+  },
+  slowRetryButton: {
+    marginTop: 24,
+    backgroundColor: '#000',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 8,
+  },
+  slowRetryText: {
+    color: '#fff',
+    fontWeight: 'bold',
+    fontSize: 15,
   },
 });
 

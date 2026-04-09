@@ -140,7 +140,7 @@ export default function LoginScreen() {
   );
 }
 
-// ── Styles (identical to original) ────────────────────────────────────────
+// Styles
 const styles = StyleSheet.create({
   flex: { flex: 1 },
   background: { ...StyleSheet.absoluteFillObject, backgroundColor: '#d9d9d9ff' },

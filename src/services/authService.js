@@ -1,21 +1,7 @@
-/**
- * authService.js — SMR Food Mills
- *
- * PERMANENT LOGIN STRATEGY:
- * - Credentials stored in SecureStore (encrypted, survives app restarts forever)
- * - Every app open → silently POST to checklog.php → fresh PHP session
- * - PHP cookie expiry becomes irrelevant — we always re-authenticate first
- * - User never sees login screen unless they manually tap Logout
- *
- * Install: npm install react-native-keychain
- */
-
 import * as Keychain from 'react-native-keychain';
 
 const LOGIN_URL = 'https://smrfoodsmills.com/smrapp/app_mobile_view/checklog.php';
 const DASHBOARD_URL = 'https://smrfoodsmills.com/smrapp/app_mobile_view/category.php';
-
-// ─── Credential Storage ───────────────────────────────────────────────────
 
 export async function saveCredentials(username, password) {
   try {
@@ -45,8 +31,6 @@ export async function clearCredentials() {
   }
 }
 
-// ─── Cookie Parser ────────────────────────────────────────────────────────
-
 export function parseCookies(cookieString) {
   if (!cookieString) return [];
   return cookieString
@@ -54,8 +38,6 @@ export function parseCookies(cookieString) {
     .map(part => part.trim().split(';')[0].trim())
     .filter(Boolean);
 }
-
-// ─── Core Login ───────────────────────────────────────────────────────────
 
 export async function loginUser(username, password) {
   try {
@@ -73,7 +55,7 @@ export async function loginUser(username, password) {
     const text = (await response.text()).trim();
     const arr = text.split('|');
     const status = arr[0];
-    const cookie = arr[1] || '';   // e.g. "PHPSESSID=abc123"
+    const cookie = arr[1] || '';
 
     if (status === '0') {
       return { success: true, cookies: cookie, dashboardUrl: DASHBOARD_URL };
@@ -89,17 +71,13 @@ export async function loginUser(username, password) {
   }
 }
 
-// ─── Auto Login (called on every app open / foreground) ──────────────────
-// Returns fresh cookie string on success, null if no stored creds exist.
-
 export async function autoLogin() {
   const creds = await loadCredentials();
-  if (!creds) return null;          // Never logged in — must show login screen
+  if (!creds) return null;
 
-  // loginUser will throw if there's a network error
   const result = await loginUser(creds.username, creds.password);
   
   if (result.success) return result.cookies;
 
-  return null;  // Password changed server-side or account issue
+  return null;
 }
